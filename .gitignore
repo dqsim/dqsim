@@ -1,0 +1,11 @@
+/bin
+/build
+/build_reldeb
+/build_test
+recording.json
+/cmake-*
+venv/
+/figure_output
+/ds_sql_frontend
+/.cache/
+/.metals/
