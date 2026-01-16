@@ -65,21 +65,20 @@ def get_benchmarks(benchmark_name: str) -> tuple[list[str], list[list[Simulation
             "Choosing the newest one.\n"
             "You can clear them in the folder benchmark_results."
         )
-        found_names = set()
         names = []
         data = []
         name_times = {}
-        for i, b in enumerate(benchs):
+        for _, b in enumerate(benchs):
             name = b["assignmentAlgorithm"]
             current_time = b["file_creation_time"]
-            if name not in found_names:
+            if name not in names:
                 names.append(name)
                 name_times[name] = current_time
                 data.append(parse_benchmarks(b))
 
             if current_time > name_times[name]:
                 name_times[name] = current_time
-                data[i] = parse_benchmarks(b)
+                data[names.index(name)] = parse_benchmarks(b)
 
     assert len(set(names)) == len(names), f"There are duplicate names in {benchmark_name}"
     for alg in data:
@@ -286,7 +285,6 @@ def create_all_figures():
     generic_bar_chart("scale_out")
     generic_bar_chart("scale_out_to_large")
     generic_bar_chart("heterogeneous")
-    run_benchmark(Path(f"{get_benchmark_definition_path()}/growing_scale_out_to_large.json"))
     generic_bar_chart("growing_scale_out_to_large")
     partition_scaling_chart()
     node_scaling_chart()
